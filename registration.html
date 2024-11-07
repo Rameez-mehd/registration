@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.40) rgba(0,0,0,0.80)), url('meskc.jpg'); /* You can replace 'background-image.jpg' with your own image */
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: #333; /* Text color for the body */
+        }
+
+        /* Container for the form */
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.8); /* White background with opacity */
+            background: transparent;
+            backdrop-filter: blur(2px);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading style */
+        h2 {
+            text-align: center;
+            text-decoration-line: underline;
+            font-family: cursive, lucida handwriting;
+            text-decoration-thickness: 2px;
+            color: #18691b; /* Heading color */
+            font-size: 30px;
+        }
+
+        /* Form labels */
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #128133; /* Label color */
+        }
+
+        /* Styling the input boxes and select boxes */
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc; /* Border color */
+            font-size: 16px;
+            color: #333; /* Text color inside the input/select box */
+            background-color: #b1d8bd; /* Background color of the input/select box */
+        }
+
+        /* Styling for the textboxes (input fields) */
+        input[type="text"]:focus {
+            border-color: #4CAF50; /* Focus border color */
+            background-color: #b1d8bd; /* Focus background color */
+            outline: none;
+        }
+
+        /* Multi-select dropdown box styling */
+        select[multiple] {
+            height: 150px;
+            background-color: #b1d8bd;
+        }
+
+        /* Styling for the submit button */
+        button {
+            background-color: #4CAF50; /* Button background color */
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Hover effect for the button */
+        }
+
+        /* Optional: Form container styling for better spacing */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Styling for the select dropdown when multiple options are allowed */
+        select[multiple] {
+            color: #333;
+            background-color: #b1d8bd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Registration Form</h2>
+    <form action="#" method="post">
+        <!-- Name Field -->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <!-- Department Field -->
+        <div class="form-group">
+            <label for="department">Department</label>
+            <input type="text" id="department" name="department" required>
+        </div>
+
+        <!-- Year Field -->
+        <div class="form-group">
+            <label for="year">Year</label>
+            <input type="text" id="year" name="year" required>
+        </div>
+
+        <!-- Team Name Field -->
+        <div class="form-group">
+            <label for="team">Team Name</label>
+            <select id="team" name="team" required>
+                <option value="">Select Team Name</option>
+                <option value="Team A">Team A</option>
+                <option value="Team B">Team B</option>
+                <option value="Team C">Team C</option>
+                <option value="Team D">Team D</option>
+            </select>
+        </div>
+
+        <!-- Categories Field -->
+        <div class="form-group">
+            <label for="categories">Categories</label>
+            <select id="categories" name="categories" multiple required>
+                <option value="Category 1">literation</option>
+                <option value="Category 2">fine art</option>
+                <option value="Category 3">music</option>
+                <option value="Category 4">intrumental music</option>
+                <option value="Category 5">dance</option>
+                <option value="Category 6">skit</option>
+            </select>
+        </div>
+
+        <!-- Sub-selection based on categories -->
+        <div class="form-group" id="subcategories-container">
+            <label for="subcategories">Sub-selection (based on Categories)</label>
+            <select id="subcategories" name="subcategories" multiple required>
+                <!-- Subcategories options will be populated via JavaScript -->
+            </select>
+        </div>
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<script>
+    // Example subcategories for each category
+    const subcategories = {
+        'Category 1': ['poetical composition', 'short story', 'poem','speech','quiz','debate','akshara slokam','kavya keli'],
+        'Category 2': ['water colouring', 'oil painting', 'cartoon','pencil drawing','clay modelling','collage','embroidery','poster','rangolli','photography','pookalam'],
+        'Category 3': ['lalidha ghanam', 'classical song', 'group song(indian)','group song(western)','mappilla paattu(group)','mappilla paattu(individual)','western song(group)','nomad song','semi classical','dheshabhakthighanam(group)','kadhakali music','ghanamela','poem'],
+        'Category 4': ['insturments', 'chenda melam', 'band melam','chenda','madhalam'],
+        'Category 5': ['kadhakali', 'kadhakali(group)', 'baradhanatyam','mohiniaattam','classical dance','naadodi nirtham','thullal','koodiyattam','chakyarkoothu'],
+        'Category 6': ['Sub-category 6.1', 'Sub-category 6.2', 'Sub-category 6.3']
+    };
+
+    const categoriesSelect = document.getElementById('categories');
+    const subcategoriesSelect = document.getElementById('subcategories');
+
+    categoriesSelect.addEventListener('change', function() {
+        // Clear previous subcategories
+        subcategoriesSelect.innerHTML = '';
+
+        // Get selected categories
+        const selectedCategories = Array.from(categoriesSelect.selectedOptions).map(option => option.value);
+
+        // Populate subcategories based on selected categories
+        selectedCategories.forEach(category => {
+            if (subcategories[category]) {
+                subcategories[category].forEach(subcategory => {
+                    const option = document.createElement('option');
+                    option.value = subcategory;
+                    option.textContent = subcategory;
+                    subcategoriesSelect.appendChild(option);
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
