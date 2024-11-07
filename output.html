@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Output</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            font-family: cursive, lucida handwriting;
+            color: #18691b;
+            font-size: 30px;
+        }
+        #output {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #output h3 {
+            text-align: center;
+        }
+        .output-item {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<h2><center>Registration Details</center></h2>
+
+<div id="output">
+    <h3>Entered Registration Details</h3>
+    <div id="output-name" class="output-item"></div>
+    <div id="output-department" class="output-item"></div>
+    <div id="output-year" class="output-item"></div>
+    <div id="output-team" class="output-item"></div>
+    <div id="output-items" class="output-item"></div>
+</div>
+
+<script>
+    // Retrieve data from sessionStorage
+    const data = JSON.parse(sessionStorage.getItem('registrationData'));
+
+    if (data) {
+        // Display entered details
+        document.getElementById('output-name').textContent = `Full Name: ${data.name}`;
+        document.getElementById('output-department').textContent = `Department: ${data.department}`;
+        document.getElementById('output-year').textContent = `Year: ${data.year}`;
+        document.getElementById('output-team').textContent = `Team: ${data.team}`;
+
+        // Display selected items
+        let itemsOutput = "Items: ";
+        if (data.selectedItems) {
+            itemsOutput += "<ul>";
+            for (const category in data.selectedItems) {
+                data.selectedItems[category].forEach(item => {
+                    itemsOutput += `<li>${category} - ${item}</li>`;
+                });
+            }
+            itemsOutput += "</ul>";
+        } else {
+            itemsOutput = "No items selected.";
+        }
+        document.getElementById('output-items').innerHTML = itemsOutput;
+    } else {
+        document.getElementById('output').innerHTML = '<p>No registration data found.</p>';
+    }
+</script>
+
+</body>
+</html>
+
+
