@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('image.jpg'); /* You can replace 'background-image.jpg' with your own image */
+            background-size: cover;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+	    width: 50%;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.8); /* White background with opacity */
+            background: transparent;
+            backdrop-filter: blur(2px);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+	 h2 {
+            text-align: center;
+            text-decoration-line: underline;
+            font-family: cursive, lucida handwriting;
+            text-decoration-thickness: 2px;
+            color: #18691b; /* Heading color */
+            font-size: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .category-item {
+            margin-left: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #output {
+            margin-top: 20px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        #added-items {
+            margin-top: 20px;
+        }
+        #added-items-list {
+            list-style-type: none;
+        }
+        #added-items-list li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body text="green">
+
+    <h2><center>Registration Form</center></h2>
+    <form id="registrationForm">
+        <!-- Name -->
+        <div class="form-group">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <!-- Department -->
+        <div class="form-group">
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department" required>
+        </div>
+
+        <!-- Year -->
+        <div class="form-group">
+            <label for="year">Year:</label>
+            <input type="text" id="year" name="year" required>
+        </div>
+
+        <!-- Team Name -->
+        <div class="form-group">
+            <label for="team">Team Name:</label>
+            <select id="team" name="team">
+                <option value="">Select Team</option>
+                <option value="Team A">Team A</option>
+                <option value="Team B">Team B</option>
+                <option value="Team C">Team C</option>
+            </select>
+        </div>
+
+        <!-- Categories -->
+        <div class="form-group">
+            <label for="categories">Categories:</label>
+            <select id="categories" name="categories" multiple onchange="updateItems()">
+                <option value="Tech">Tech</option>
+                <option value="Design">Design</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Management">Management</option>
+                <option value="Finance">Finance</option>
+                <option value="HR">HR</option>
+            </select>
+        </div>
+
+        <!-- Items (subcategories based on category selection) -->
+        <div id="items" class="form-group">
+            <label>Select items (subcategories):</label>
+            <!-- Items will be populated based on selected categories -->
+        </div>
+
+        <!-- Add Button to Add Selected Items -->
+        <button type="button" id="addButton" onclick="addItems()">Add Items</button>
+
+        <!-- Display Added Items -->
+        <div id="added-items">
+            <h4>Added Items:</h4>
+            <ul id="added-items-list"></ul>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Output Section -->
+    <div id="output" style="display: none;">
+        <h3>Entered Details</h3>
+        <p><strong>Name:</strong> <span id="output-name"></span></p>
+        <p><strong>Department:</strong> <span id="output-department"></span></p>
+        <p><strong>Year:</strong> <span id="output-year"></span></p>
+        <p><strong>Team:</strong> <span id="output-team"></span></p>
+        <p><strong>Items:</strong> <span id="output-items"></span></p>
+    </div>
+
+    <script>
+        // List of items for each category
+        const categoryItems = {
+            "Tech": ["AI", "Blockchain", "Cloud Computing", "IoT"],
+            "Design": ["UX/UI", "Graphic Design", "Web Design", "Product Design"],
+            "Marketing": ["SEO", "Social Media", "Content Marketing", "PPC"],
+            "Management": ["Project Management", "Team Leadership", "Strategy", "Operations"],
+            "Finance": ["Accounting", "Investing", "Budgeting", "Financial Analysis"],
+            "HR": ["Recruitment", "Employee Relations", "Training", "Performance Management"]
+        };
+
+        let selectedItems = {};  // Object to store selected items by category
+
+        // Function to update items based on selected categories
+        function updateItems() {
+            // Get selected categories
+            const selectedCategories = Array.from(document.getElementById('categories').selectedOptions)
+                .map(option => option.value);
+            
+            // Get the 'items' div to update
+            const itemsDiv = document.getElementById('items');
+            itemsDiv.innerHTML = '<label>Select items:</label>'; // Clear previous items
+            
+            // Dynamically add checkboxes for selected categories
+            selectedCategories.forEach(category => {
+                const itemsList = categoryItems[category] || [];
+                itemsList.forEach(item => {
+                    const checkboxLabel = document.createElement('label');
+                    checkboxLabel.innerHTML = `<input type="checkbox" name="items" value="${item}" data-category="${category}"> ${item}`;
+                    itemsDiv.appendChild(checkboxLabel);
+                    itemsDiv.appendChild(document.createElement('br'));
+                });
+            });
+        }
+
+        // Function to add selected items to the added-items list
+        function addItems() {
+            const selectedCheckboxes = document.querySelectorAll('input[name="items"]:checked');
+            const itemsList = document.getElementById('added-items-list');
+
+            selectedCheckboxes.forEach(checkbox => {
+                const itemValue = checkbox.value;
+                const category = checkbox.getAttribute('data-category');
+
+                // Add item to selectedItems object under the appropriate category
+                if (!selectedItems[category]) {
+                    selectedItems[category] = [];
+                }
+                if (!selectedItems[category].includes(itemValue)) {
+                    selectedItems[category].push(itemValue);
+
+                    // Add to the list (visible list of added items)
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${category}-${itemValue}`;
+                    itemsList.appendChild(listItem);
+                }
+            });
+
+            // Clear the checkboxes after adding
+            document.querySelectorAll('input[name="items"]').forEach(input => input.checked = false);
+        }
+
+        // Form submit handling
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Collect form data
+            const name = document.getElementById('name').value;
+            const department = document.getElementById('department').value;
+            const year = document.getElementById('year').value;
+            const team = document.getElementById('team').value;
+
+            // Display entered details
+            document.getElementById('output-name').textContent = name;
+            document.getElementById('output-department').textContent = department;
+            document.getElementById('output-year').textContent = year;
+            document.getElementById('output-team').textContent = team;
+
+            // Prepare the output of selected items as category-item
+            const outputItems = Object.keys(selectedItems).map(category => {
+                return selectedItems[category].map(item => `${category}-${item}`).join(', ');  // Category-Item format
+            }).join('; ');
+
+            document.getElementById('output-items').textContent = outputItems || "None";
+
+            // Show the output section
+            document.getElementById('output').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
