@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: url('image.jpg'); /* You can replace 'background-image.jpg' with your own image */
+            background: url('image1.jpg'); /* You can replace 'background-image.jpg' with your own image */
             background-size: cover;
             margin: 0;
             padding: 20px;
@@ -37,6 +37,7 @@
         label {
             display: block;
             margin-bottom: 5px;
+            color: aliceblue;
         }
         input[type="text"], select {
             width: 100%;
@@ -71,6 +72,7 @@
         }
         #added-items {
             margin-top: 20px;
+            color: aliceblue;
         }
         #added-items-list {
             list-style-type: none;
@@ -80,7 +82,7 @@
         }
     </style>
 </head>
-<body text="green">
+<body>
 
     <h2><center>Registration Form</center></h2>
     <form id="registrationForm">
@@ -117,12 +119,12 @@
         <div class="form-group">
             <label for="categories">Categories:</label>
             <select id="categories" name="categories" multiple onchange="updateItems()">
-                <option value="Tech">Tech</option>
-                <option value="Design">Design</option>
-                <option value="Marketing">Marketing</option>
-                <option value="Management">Management</option>
-                <option value="Finance">Finance</option>
-                <option value="HR">HR</option>
+                <option value="LITERATURE">LITERATURE</option>
+                <option value="FINEART">FINE ART</option>
+                <option value="MUSIC">MUSIC</option>
+                <option value="INSTRUMENTAL">INSTRUMENTAL MUSIC</option>
+                <option value="DANCE">DANCE</option>
+                <option value="STAGE">STAGE PROGRAMS</option>
             </select>
         </div>
 
@@ -158,12 +160,12 @@
     <script>
         // List of items for each category
         const categoryItems = {
-            "Tech": ["AI", "Blockchain", "Cloud Computing", "IoT"],
-            "Design": ["UX/UI", "Graphic Design", "Web Design", "Product Design"],
-            "Marketing": ["SEO", "Social Media", "Content Marketing", "PPC"],
-            "Management": ["Project Management", "Team Leadership", "Strategy", "Operations"],
-            "Finance": ["Accounting", "Investing", "Budgeting", "Financial Analysis"],
-            "HR": ["Recruitment", "Employee Relations", "Training", "Performance Management"]
+            "LITERATURE": ['poetical composition', 'short story', 'poem','speech','quiz','debate','akshara slokam','kavya keli'],
+            "FINEART": ['water colouring', 'oil painting', 'cartoon','pencil drawing','clay modelling','collage','embroidery','poster','rangolli','photography','pookalam'],
+            "MUSIC": ['lalidha ghanam', 'classical song', 'group song(indian)','group song(western)','mappilla paattu','nomad song','semi classical','kadhakali music','ghanamela','poem'],
+            "INSTRUMENTAL": ['insturments', 'chenda melam', 'band melam','chenda','madhalam'],
+            "DANCE": ['kadhakali', 'baradhanatyam','mohiniaattam','classical dance','naadodi nirtham','thullal','koodiyattam','chakyarkoothu'],
+            "STAGE": ['naadagam','myme','skit','kadhapresangam','mono act','mimicry']
         };
 
         let selectedItems = {};  // Object to store selected items by category
